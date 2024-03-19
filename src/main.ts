@@ -1,16 +1,22 @@
 import { log } from 'console';
 import { check } from './check.ts';
+import { loadFile } from './data.ts';
 
-const args = process.argv.slice(2);
+log(process.env);
+await main(process.argv.slice(2));
 
-switch (args[0]) {
-    case 'check':
-        await check();
-        break;
+async function main(args: string[]) {
+    const datas = loadFile();
 
-    case 'generate':
-        break;
+    switch (args[0]) {
+        case 'check':
+            await check(datas);
+            break;
 
-    default:
-        throw new Error('未知的操作');
+        case 'generate':
+            break;
+
+        default:
+            throw new Error('未知的操作');
+    }
 }

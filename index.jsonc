@@ -1,8 +1,0 @@
-{
-    "example": {
-        "owner": "Foo",
-        "repo": "Bar",
-        "path": "/"
-    },
-    "test": {}
-}
