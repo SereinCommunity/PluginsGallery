@@ -14,6 +14,8 @@ jobs:
 
       - name: Build
         shell: bash
+        env:
+          TOKEN: ${{github.token}}
         run: |
           npm i
           npm run check

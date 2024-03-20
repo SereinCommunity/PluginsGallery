@@ -1,7 +1,4 @@
 {
-  "name": "pluginsgallery",
-  "version": "1.0.0",
-  "description": "插件列表",
   "scripts": {
     "generate": "node --loader ts-node/esm src/main.ts generate",
     "check": "node --loader ts-node/esm src/main.ts check"
@@ -9,6 +6,9 @@
   "type": "module",
   "dependencies": {
     "@actions/core": "^1.10.1",
+    "ajv": "^8.12.0",
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
     "jsonc": "^2.0.0",
     "octokit": "^3.1.2",
     "ts-node": "^10.9.2"

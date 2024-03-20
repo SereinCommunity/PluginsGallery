@@ -1,19 +1,22 @@
-import { log } from 'console';
-import { check } from './check.ts';
-import { loadFile } from './data.ts';
+import { config } from 'dotenv';
 
-log(process.env);
+import { check, summaryCheck } from './check.ts';
+import { loadIndex } from './data.ts';
+import { generate } from './generator.ts';
+
+config();
 await main(process.argv.slice(2));
 
 async function main(args: string[]) {
-    const datas = loadFile();
+    const datas = loadIndex();
 
     switch (args[0]) {
         case 'check':
-            await check(datas);
+            await summaryCheck(await check(datas));
             break;
 
         case 'generate':
+            await generate(datas);
             break;
 
         default:
