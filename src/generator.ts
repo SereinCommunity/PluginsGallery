@@ -1,11 +1,11 @@
 import * as core from '@actions/core';
+import * as github from '@actions/github';
 import * as fs from 'fs';
-
+import { jsonc } from 'jsonc';
 import { check } from './check.ts';
 import { BUILDDIR, PLUGININFOJSON } from './constants.ts';
 import { octokit, rawGHInstance } from './network.ts';
 import { Indexes, PluginFullInfo, PluginShortInfo, RepoInfo } from './types.ts';
-import { jsonc } from 'jsonc';
 
 export async function generate(datas: [string, any][]) {
     if (fs.existsSync(BUILDDIR))
@@ -25,7 +25,19 @@ export async function generate(datas: [string, any][]) {
 
     fs.writeFileSync(
         `${BUILDDIR}/index.json`,
-        jsonc.stringify(indexes, undefined, 4)
+        jsonc.stringify(
+            {
+                metadata: {
+                    time: new Date().toISOString(),
+                    id: github.context.runId,
+                    ref: github.context.ref,
+                },
+
+                data: indexes,
+            },
+            undefined,
+            4
+        )
     );
 
     for (const key in indexes) {
@@ -42,7 +54,7 @@ async function summary(inedxes: Indexes) {
     core.summary.addHeading('生成结果', 2);
 
     core.summary.addTable([
-        ['ID', 'Repo'],
+        ['插件ID'],
         ...Object.entries(inedxes).map((item) => [`<code>${item[0]}</code>`]),
     ]);
 
@@ -51,9 +63,9 @@ async function summary(inedxes: Indexes) {
         'Octokit Api状态',
         `${rateLimit.data.rate.remaining}/${
             rateLimit.data.rate.limit
-        }<br>重置时间: ${new Date(
+        }<br>重置时间: <code>${new Date(
             rateLimit.data.rate.reset * 1000
-        ).toISOString()}`
+        ).toISOString()}</code>`
     );
 
     await core.summary.write();

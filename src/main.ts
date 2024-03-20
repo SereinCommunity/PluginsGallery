@@ -1,5 +1,4 @@
 import { config } from 'dotenv';
-
 import { check, summaryCheck } from './check.ts';
 import { loadIndex } from './data.ts';
 import { generate } from './generator.ts';

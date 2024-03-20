@@ -3,6 +3,8 @@ name: generate
 on:
   push:
   workflow_dispatch:
+#   schedule:
+#     - cron: "0 0 * * *"
 
 permissions:
   contents: read
@@ -34,7 +36,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: "./build"
+          path: "./result"
 
       - name: Deploy to GitHub Pages
         id: deployment

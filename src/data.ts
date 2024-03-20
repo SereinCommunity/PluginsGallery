@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import { jsonc } from 'jsonc';
-import { INDEXJSON } from './constants.ts';
+import { LISTJSON } from './constants.ts';
 
 export function loadIndex() {
-    const datas = jsonc.parse(fs.readFileSync(INDEXJSON, 'utf8')) as {
+    const datas = jsonc.parse(fs.readFileSync(LISTJSON, 'utf8')) as {
         [key: string]: any;
     };
 

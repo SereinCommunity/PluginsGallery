@@ -1,0 +1,46 @@
+name: 提交插件
+description: 提交你的插件，方便被其他用户搜索
+title: "提交插件: `<在此处填写插件ID>`"
+labels: ["plugin"]
+body:
+  - type: input
+    attributes:
+      label: 插件ID
+      description: 用于标识和区分插件。需要满足正则`^[a-zA-Z][a-zA-Z0-9\\-]{4,25}$`
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: 所有者
+      description: 存放插件信息（`plugininfo.json`）的仓库的所有者
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: 仓库名称
+      description: 存放插件信息（`plugininfo.json`）的仓库
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: 分支
+      description: 存放插件信息（`plugininfo.json`）的仓库的分支。未填写则使用该仓库的默认分支
+
+  - type: input
+    attributes:
+      label: 路径
+      description: 插件信息（`plugininfo.json`）的路径。未填写则使用根目录
+
+  - type: checkboxes
+    attributes:
+      label: 检查项
+      options:
+        - label: 我已确认插件ID符合规则（`^[a-zA-Z][a-zA-Z0-9\\-]{4,25}$`）
+          required: true
+        - label: 我已确认所填写项均正确
+          required: true
+        - label: 我已确认此插件不会违反当地的法律法规
+          required: true

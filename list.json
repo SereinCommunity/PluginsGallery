@@ -2,6 +2,7 @@
     "better-whitelist": {
         "owner": "SereinCommunity",
         "repo": "BetterWhitelist",
+        "branch": null,
         "path": "/"
     }
 }

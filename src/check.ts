@@ -62,22 +62,22 @@ export async function summaryCheck(result: Result) {
 
     core.summary.addQuote('检查时间: ' + new Date().toISOString());
 
-    if (result.failure.length > 0)
-        core.setFailed(
-            `存在"${result.failure[0][0]}"等共${result.failure.length}项有问题的插件`
-        );
-
     const rateLimit = await octokit.rest.rateLimit.get();
     core.summary.addDetails(
         'Octokit Api状态',
         `${rateLimit.data.rate.remaining}/${
             rateLimit.data.rate.limit
-        }<br>重置时间: ${new Date(
+        }<br>重置时间: <code>${new Date(
             rateLimit.data.rate.reset * 1000
-        ).toISOString()}`
+        ).toISOString()}</code>`
     );
 
     await core.summary.write();
+
+    if (result.failure.length > 0)
+        core.setFailed(
+            `存在"${result.failure[0][0]}"等共${result.failure.length}项有问题的插件`
+        );
 }
 
 function checkId(item: [string, any]) {
