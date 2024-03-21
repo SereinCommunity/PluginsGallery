@@ -31,6 +31,8 @@ export declare type PluginShortInfo = {
 };
 
 export declare type RepoInfo = {
+    repo: string;
+    url: string;
     updateTime: string;
     releases: {
         name: string | null;

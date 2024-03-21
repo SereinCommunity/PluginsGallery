@@ -60,8 +60,6 @@ export async function summaryCheck(result: Result) {
         true
     );
 
-    core.summary.addQuote('检查时间: ' + new Date().toISOString());
-
     const rateLimit = await octokit.rest.rateLimit.get();
     core.summary.addDetails(
         'Octokit Api状态',

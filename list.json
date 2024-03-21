@@ -4,5 +4,17 @@
         "repo": "BetterWhitelist",
         "branch": null,
         "path": "/"
+    },
+    "stdio": {
+        "owner": "SereinCommunity",
+        "repo": "stdio",
+        "branch": null,
+        "path": "/"
+    },
+    "serein-phira-broadcast": {
+        "owner": "SereinCommunity",
+        "repo": "serein-phira-broadcast",
+        "branch": null,
+        "path": "/"
     }
 }

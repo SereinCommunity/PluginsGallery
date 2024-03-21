@@ -30,7 +30,9 @@ export async function generate(datas: [string, any][]) {
                 metadata: {
                     time: new Date().toISOString(),
                     id: github.context.runId,
+                    number: github.context.runNumber,
                     ref: github.context.ref,
+                    sha: github.context.sha,
                 },
 
                 data: indexes,
@@ -47,7 +49,28 @@ export async function generate(datas: [string, any][]) {
         );
     }
 
-    summary(indexes);
+    fs.writeFileSync(
+        `${BUILDDIR}/index.html`,
+        `<!DOCTYPE html>
+        <html lang="zh">
+        <head>
+            <meta charset="UTF-8">
+            <title>跳转中 · PluginsGallery</title>
+            <script>
+                setTimeout(
+                    () =>
+                        (window.location.href =
+                            'https://sereincommunity.github.io/PluginsGallery/index.json'),
+                    10
+                );
+            </script>
+        </head>
+        <body>
+        </body>
+        </html>`
+    );
+
+    if (process.env.SUMMARY) summary(indexes);
 }
 
 async function summary(inedxes: Indexes) {
@@ -102,7 +125,7 @@ async function createDict(data: [string, PluginShortInfo][]) {
             version: info.version,
             isDependency: Boolean(info.isDependency),
             dependencies: info.dependencies || [],
-            description: info.description || null,
+            description: info.description || repo.data.description || null,
             targetingSereinVersion: info.targetingSereinVersion,
             targetingServerInfos: info.targetingServerInfos
                 ? info.targetingServerInfos
@@ -126,12 +149,15 @@ async function createDict(data: [string, PluginShortInfo][]) {
                               })
                       )
                 : [],
+            repo: repo.data.full_name,
+            url: repo.data.html_url,
             updateTime: repo.data.pushed_at,
             releases: releases.data.map((v) => ({
                 name: v.name,
                 tag: v.tag_name,
                 time: v.published_at,
                 assets: v.assets.map((i) => ({
+                    name: i.name,
                     size: i.size,
                     downloadCount: i.download_count,
                     url: i.browser_download_url,

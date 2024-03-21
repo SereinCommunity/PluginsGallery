@@ -11,7 +11,8 @@ async function main(args: string[]) {
 
     switch (args[0]) {
         case 'check':
-            await summaryCheck(await check(datas));
+            const result = await check(datas);
+            if (process.env.SUMMARY) await summaryCheck(result);
             break;
 
         case 'generate':

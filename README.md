@@ -2,7 +2,7 @@
 
 Serein的插件列表索引
 
-- 主索引文件：[`index.json`](https://sereincommunity.github.io/PluginsGallery/index.json)
+- 主索引文件：[**`index.json`**](https://sereincommunity.github.io/PluginsGallery/index.json)
 
 ## 提交插件教程
 
@@ -12,7 +12,7 @@ Serein的插件列表索引
 ### PR （⭐推荐）
 
 1. fork此仓库的`main`分支
-2. 打开根目录下的`list.json`
+2. 打开根目录下的[`list.json`](https://github.com/SereinCommunity/PluginsGallery/blob/main/list.json)
 3. 在其中加入自己的插件项，其中`key`为插件ID，`value`为插件的仓库信息
    ```jsonc
     {
@@ -35,4 +35,3 @@ Serein的插件列表索引
 1. [点此处](https://github.com/SereinCommunity/PluginsGallery/issues/new/choose)打开Issue界面
 2. 选择`提交插件`
 3. 按提示填写
-

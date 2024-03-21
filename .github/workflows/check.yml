@@ -12,9 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build
+      - name: Run nodejs
         shell: bash
         env:
+          SUMMARY: true
           TOKEN: ${{github.token}}
         run: |
           npm i
