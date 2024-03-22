@@ -31,6 +31,7 @@ export async function check(datas: [string, any][]) {
 
     return result;
 }
+
 export async function summaryCheck(result: Result) {
     core.summary.addHeading('检查结果', 2);
 
@@ -102,7 +103,7 @@ async function checkJson(item: [string, PluginShortInfo]) {
     const branch = item[1].branch || result.data.default_branch;
     const location =
         `${item[1].owner}/${item[1].repo}/${branch}/` +
-        (item[1].path ? item[1].path.replace(/^(.\/)+/, '') : '') +
+        (item[1].path ? item[1].path.replace(/^\/+(.\/)+/, '') : '') +
         PLUGININFOJSON;
 
     const data = (await rawGHInstance.get<PluginFullInfo>(location)).data;

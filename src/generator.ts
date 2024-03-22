@@ -29,10 +29,10 @@ export async function generate(datas: [string, any][]) {
             {
                 metadata: {
                     time: new Date().toISOString(),
-                    id: github.context.runId,
-                    number: github.context.runNumber,
-                    ref: github.context.ref,
-                    sha: github.context.sha,
+                    id: github.context.runId || null,
+                    number: github.context.runNumber || null,
+                    ref: github.context.ref || null,
+                    sha: github.context.sha || null,
                 },
 
                 data: indexes,
@@ -74,12 +74,36 @@ export async function generate(datas: [string, any][]) {
 }
 
 async function summary(inedxes: Indexes) {
-    core.summary.addHeading('生成结果', 2);
+    core.summary.addHeading('插件列表', 2);
 
-    core.summary.addTable([
-        ['插件ID'],
-        ...Object.entries(inedxes).map((item) => [`<code>${item[0]}</code>`]),
-    ]);
+    for (const key in inedxes) {
+        core.summary.addHeading(`<code>${key}</code>`, 3);
+        core.summary.addTable([
+            ['名称', inedxes[key].name],
+            ['作者', inedxes[key].author],
+            ['版本', `<code>${inedxes[key].version}</code>`],
+            ['仓库', `<a href="${inedxes[key].url}">${inedxes[key].repo}</a>`],
+            ['仓库最后更新', `<code>${inedxes[key].updateTime}</code>`],
+            [
+                '适用Serein版本',
+                `<code>${inedxes[key].targetingSereinVersion}</code>`,
+            ],
+            ['依赖插件', inedxes[key].isDependency ? '✅' : '❌'],
+
+            [
+                '依赖',
+                inedxes[key].dependencies
+                    ?.map((i) => `${i.id} @${i.version}`)
+                    .join('<br>') ?? '-',
+            ],
+            [
+                'Tags',
+                inedxes[key].tags
+                    ?.map((i) => `<code>#${i}</code>`)
+                    .join('<br>') ?? '-',
+            ],
+        ]);
+    }
 
     const rateLimit = await octokit.rest.rateLimit.get();
     core.summary.addDetails(
@@ -108,7 +132,7 @@ async function createDict(data: [string, PluginShortInfo][]) {
         const branch = item[1].branch || repo.data.default_branch;
         const location =
             `${item[1].owner}/${item[1].repo}/${branch}/` +
-            (item[1].path ? item[1].path.replace(/^(.\/)+/, '') : '') +
+            (item[1].path ? item[1].path.replace(/^\/+(.\/)+/, '') : '') +
             PLUGININFOJSON;
 
         const info = (await rawGHInstance.get<PluginFullInfo>(location)).data;
