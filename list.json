@@ -5,15 +5,27 @@
         "branch": null,
         "path": "/"
     },
-    "stdio": {
+    "ipanel-serein": {
+        "owner": "iPanelDev",
+        "repo": "iPanel-Serein",
+        "branch": null,
+        "path": "/"
+    },
+    "more-useful-variables": {
         "owner": "SereinCommunity",
-        "repo": "stdio",
+        "repo": "MoreUsefulVariables",
         "branch": null,
         "path": "/"
     },
     "serein-phira-broadcast": {
         "owner": "SereinCommunity",
         "repo": "serein-phira-broadcast",
+        "branch": null,
+        "path": "/"
+    },
+    "stdio": {
+        "owner": "SereinCommunity",
+        "repo": "stdio",
         "branch": null,
         "path": "/"
     }
